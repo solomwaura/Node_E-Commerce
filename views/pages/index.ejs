@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="products">
+        <% result.forEach(function(item) { %>
+        <div class="pro">
+            <img src="img/<%= item.image %>" alt="img" width="600px"/>
+            <% if(item.sale_price){ %>
+                <h3> Price: $ <strong class="red"><%= item.sale_price %> </strong></h3>
+                <h3 style="text-decoration:line-through;">Price: $ <strong class="red"><%= item.price %> </strong></h3>
+            <% }else{ %>
+                <h3>Price: $ <strong class="red"><%= item.sale_price %> </strong></h3>
+           <% } %>
+            <h5><%= item.name %></h5>
+            <form action="/add_to_cart" method="post">
+                <input type="hidden" name="id" value="<%= item.id %>">
+                <input type="hidden" name="name" value="<%= item.name %>">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="price" value="<%= item.price %>">
+                <input type="hidden" name="sale_price" value="<%= item.sale_price %>">
+                <input type="hidden" name="image" value="<%= item.image %>">
+                <input type="submit" value="Add To Cart" class="btn-success">
+                
+            </form>
+        </div>
+        
+       <% }) %>
+    </div>
+    <div class="try">
+        
+    </div>
+</body>
+</html>

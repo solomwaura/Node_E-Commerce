@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+            
+        </tr>
+        <% cart.forEach(function(item){ %>
+            <tr>
+                <td>
+                    <div class="product-info">
+                        <img src="img/<%= item.image %>" alt="" width="70px">
+                    </div>
+                </td>
+                <td>
+                    <small><%= item.name %></small>
+                </td>
+                <td>
+                    <% if(item.sale_price){ %>
+                        <small><%= item.price %></small>
+                    <% }else{ %>
+                        <small><%= item.price %></small>
+                    <% } %>
+                    
+                </td>
+                
+                <td>
+                    <form action="/edit_product_quantity" method="post">
+                        <input type="hidden" name="id" value="<%= item.id %>">
+                        <input type="submit" value="-" class="edit-btn" name="decrease_product">
+                        <input type="text" name="quantity" value="<%= item.quantity %>" readonly>
+                        <input type="submit" value="+" class="edit-btn" name="increase_product">
+                    </form>
+                    <!-- <small><%= item.quantity %></small> -->
+                </td>
+                <td>
+                    <% if(item.sale_price){ %>
+                        <small><%= item.sale_price * item.quantity %></small>
+                    <% }else{ %>
+                        <small><%= item.price* item.quantity %></small>
+                    <% } %>
+
+                </td>
+                <td>
+                    <form action="/remove_product" method="post">
+                        <input type="hidden" name="id" value="<%= item.id %>">
+                        <input type="submit" value="Remove" class="remove-btn" name="edit_product">
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </table> 
+    <div class="cart-total">
+        <table>
+            <tr>
+                <td>Total</td>
+                <td>$ <%= total %></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="checkout-container">
+        <form action="/checkout" method="get">
+            <input type="submit" value="Checkout" name="checkout" class="btn-checkout">
+        </form>
+    </div>
+  
+</body>
+</html>
